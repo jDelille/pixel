@@ -8,6 +8,16 @@ export default createUseStyles({
     width: '500px',
     height: '500px',
     border: '2px solid black',
+    'margin': '0 auto',
+  },
+  test: {
+    display: 'grid',
+    gridTemplateRows: 'repeat(16, 1fr)',
+    gridTemplateColumns: 'repeat(16, 1fr)',
+    width: '500px',
+    height: '81vh',
+    border: '2px solid black',
+    'margin': '0 auto',
   },
   cell: {
     cursor: 'pointer',

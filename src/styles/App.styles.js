@@ -10,6 +10,7 @@ export default createUseStyles({
     alignItems: 'center',
     fontFamily: 'sans-serif',
     background: 'navy',
+    position: 'relative'
   },
   colorSwatchContainer: {
     display: 'flex',

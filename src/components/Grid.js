@@ -10,6 +10,8 @@ const offCell = {
 const Grid = ({ currentColor, cells, setCells, borders }) => {
   const classes = useStyles();
 
+ 
+
   // get i of cell for onClick reference.
   const updateCell = (i) => (e) => {
     e.preventDefault();
@@ -34,8 +36,10 @@ const Grid = ({ currentColor, cells, setCells, borders }) => {
     }
   };
 
+  console.log(cells.length)
+
   return (
-    <div className={classes.grid}>
+    <div className={cells.length === 256 ? classes.grid : classes.test}>
       {cells.map((cell, index) => (
         <div
           // eslint-disable-next-line react/no-array-index-key
