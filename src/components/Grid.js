@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import "./Grid.scss";
-import useStyles from "./Grid.styles";
 
 const offCell = {
   on: false,
@@ -8,7 +7,6 @@ const offCell = {
 };
 
 const Grid = ({ currentColor, cells, setCells, borders, canvas }) => {
-  const classes = useStyles();
 
   // get i of cell for onClick reference.
   const updateCell = (i) => (e) => {
