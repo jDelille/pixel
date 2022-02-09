@@ -1,14 +1,12 @@
-import React from 'react';
-import useStyles from './ColorPicker.styles';
-
+import React from "react";
+import "./ColorPicker.scss";
 const ColorPicker = ({ currentColor, onSetColor }) => {
-  const classes = useStyles();
   const colorChange = (event) => {
     onSetColor(event.target.value);
   };
   return (
     <input
-      className={classes.colorPicker}
+      className="colorPicker"
       type="color"
       value={currentColor}
       onChange={colorChange}

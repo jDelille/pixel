@@ -1,15 +1,106 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap");
 
 * {
- margin: 0;
- padding: 0;
- box-sizing: border-box;
- font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-.canvas {
- background-color: rgb(54, 54, 52);
- width: 80%;
- height: 80vh;
- position: relative;
+.App {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  background-color: #f1f2f3;
+  .left {
+    width: 40vw;
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px -3px 19px 2px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    .controls {
+      height: 90%;
+      width: 100%;
+      padding: 1rem;
+      .top-controls {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       
+      }
+      .container {
+        width: 100%;
+        height: 20%;
+        display: flex;
+        align-items: center;
+        position: relative;
+        flex-direction: column;
+        margin: 1rem 0;
+
+        .title {
+         width: 100%;
+         height: 30px;
+         position: absolute;
+         left: 0;
+         top: 0;
+         display: flex;
+         align-items: center;
+         padding-left: 1rem;
+         
+        }
+        .display {
+         display: flex;
+         width: 100%;
+         height: 90%;
+         margin-top: 30px;
+         border-top: 1px solid lightgray;
+         border-bottom: 1px solid lightgray;
+         align-items: center;
+         .control-btn {
+          border: none;
+          padding: 10px 30px;
+          margin-left: 1rem;
+          border: 1px solid cornflowerblue;
+          cursor: pointer;
+         }
+         .color-swatch {
+          margin: 1rem;
+          padding: 0;
+          width: 50px;
+          height: 50px;
+          outline: none;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          
+        }
+        }
+        
+        .color-picker {
+         border: 1px solid black;
+         width: 100%;
+
+        }
+        
+      }
+    }
+  }
+  .right {
+    width: 60vw;
+    height: 100%;
+    .canvas {
+      background-color: #f1f2f3;
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+  }
 }

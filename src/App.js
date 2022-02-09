@@ -1,19 +1,17 @@
-import React, { useState, useMemo } from "react";
-
+import React, { useState, useMemo, useRef } from "react";
 import Grid from "./components/Grid";
 import ColorPicker from "./components/ColorPicker";
-import useStyles from "./styles/App.styles";
 import "./styles/App.scss";
-
+import { exportComponentAsPNG, exportComponentAsJPEG } from "react-component-export-image";
 const offCell = {
   on: false,
   color: "#ffffff",
 };
 
 // set canvas sizes
-let faviconSize = 256;
-let landscapeSize = 600;
-let portraitSize = 32 * 12;
+let faviconSize = 15 * 15;
+let landscapeSize = 15 * 30;
+let portraitSize = 500;
 
 // default favicon size
 const initialCells = Array.from({ length: faviconSize }, () => offCell);
@@ -30,17 +28,15 @@ function App() {
   const [portrait, setPortrait] = useState(false);
   const [favicon, setFavicon] = useState(false);
 
-  //
 
-  const classes = useStyles();
+  // grab image from canvas for download
+  const panelRef = useRef();
+
+
   const colorSwatch = useMemo(
     () => [
       ...new Set(cells.filter((cell) => cell.on).map((cell) => cell.color)),
     ],
-    [cells]
-  );
-  const chatString = useMemo(
-    () => cells.map((cell) => cell.color.slice(1)).join(","),
     [cells]
   );
 
@@ -69,50 +65,108 @@ function App() {
   };
 
   return (
-    <div className={classes.app}>
-      {/* color picker */}
-      <ColorPicker currentColor={currentColor} onSetColor={setCurrentColor} />
+    <div className="App">
+      {/* LEFT SIDE  */}
 
-      <div className={classes.colorSwatchContainer}>
-        {colorSwatch.map((color) => (
-          <div
-            key={color}
-            onClick={() => setCurrentColor(color)}
-            className={classes.colorSwatch}
-            style={{ background: color }}
+      <div className="left">
+        <div className="controls">
+          <div className="top-controls">
+            <ColorPicker
+              currentColor={currentColor}
+              onSetColor={setCurrentColor}
+              className="color-picker"
+            />
+          </div>
+
+          {/* CHOOSE CANVAS SIZE */}
+          <div className="container">
+            <div className="title">
+              <p> Canvas </p>
+            </div>
+            <div className="display">
+              <button className="control-btn" onClick={toggleFavicon}>
+                Favicon Size
+              </button>
+              <button className="control-btn" onClick={toggleLandscape}>
+                Landscape
+              </button>
+              <button className="control-btn" onClick={togglePortrait}>
+                Portrait
+              </button>
+            </div>
+          </div>
+
+          {/* COLOR HISTORY CONTAINER */}
+          <div className="container">
+            {/* color picker */}
+            <div className="title">
+              <p> Color History </p>
+            </div>
+            <div className="display">
+              {colorSwatch.map((color) => (
+                <div
+                  key={color}
+                  onClick={() => setCurrentColor(color)}
+                  className="color-swatch"
+                  style={{ background: color }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* TOGGLE CELL BORDERS  */}
+          <div className="container">
+            <div className="title">
+              <p>Toggle Borders</p>
+            </div>
+            <div className="display">
+              <button
+                className="control-btn"
+                onClick={() => setBorders(!borders)}
+              >
+                Show Borders
+              </button>
+            </div>
+          </div>
+
+          {/* EXPORT IMAGE CONTAINER  */}
+
+          <div className="container">
+            <div className="title">
+              <p> Export as PNG </p>
+            </div>
+            <div className="display">
+              <button
+                onClick={() => exportComponentAsPNG(panelRef)}
+                className="control-btn"
+              >
+                Export as PNG
+              </button>
+              <button
+                onClick={() => exportComponentAsJPEG(panelRef)}
+                className="control-btn"
+              >
+                Export as JPEG
+              </button>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+
+      {/* RIGHT SIDE  */}
+      <div className="right">
+        <div className="canvas">
+          <Grid
+            cells={cells}
+            setCells={setCells}
+            currentColor={currentColor}
+            borders={borders}
+            canvas={panelRef}
           />
-        ))}
+        </div>
       </div>
-
-      {/* pass each cell and color to grid */}
-      <button className="show-borders" onClick={() => setBorders(!borders)}>
-        Show Borders
-      </button>
-      <div className="control-container">
-        <button className="control-btn" onClick={toggleFavicon}>
-          Favicon Size
-        </button>
-        <button className="control-btn" onClick={toggleLandscape}>
-          Landscape
-        </button>
-        <button className="control-btn" onClick={togglePortrait}>
-          Portrait
-        </button>
-      </div>
-      <div className="canvas">
-      <Grid
-        cells={cells}
-        setCells={setCells}
-        currentColor={currentColor}
-        borders={borders}
-      />
-      </div>
-      
-      <p className={classes.chatString}>
-        {/* eslint-disable-next-line */}
-        !rgb
-        {chatString}
-      </p>
     </div>
   );
 }

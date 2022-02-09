@@ -1,16 +1,14 @@
-import React from 'react';
-
-import useStyles from './Grid.styles';
+import React, { useRef } from "react";
+import "./Grid.scss";
+import useStyles from "./Grid.styles";
 
 const offCell = {
   on: false,
-  color: '#000000',
+  color: "#ffffff",
 };
 
-const Grid = ({ currentColor, cells, setCells, borders }) => {
+const Grid = ({ currentColor, cells, setCells, borders, canvas }) => {
   const classes = useStyles();
-
- 
 
   // get i of cell for onClick reference.
   const updateCell = (i) => (e) => {
@@ -20,7 +18,6 @@ const Grid = ({ currentColor, cells, setCells, borders }) => {
     if (e.buttons === 1 || e.buttons === 2) {
       setCells(
         cells.map((cell, cellIndex) => {
-
           if (cellIndex === i) {
             if (e.buttons === 1) {
               return {
@@ -36,22 +33,37 @@ const Grid = ({ currentColor, cells, setCells, borders }) => {
     }
   };
 
-  console.log(cells.length)
 
   return (
-    <div className={cells.length === 256 ? classes.grid : classes.test}>
-      {cells.map((cell, index) => (
-        <div
-          // eslint-disable-next-line react/no-array-index-key
-          key={index}
-          // set default color of cell to white
-          style={{ background: cell.on ? cell.color : '#ffffff' }}
-          className={borders ? classes.borderedCell : classes.cell}
-          onMouseOver={updateCell(index)}
-          onMouseDown={updateCell(index)}
-          onContextMenu={(e) => e.preventDefault()}
-        />
-      ))}
+    <div className="right-side">
+      <div className="instructions">
+        <p> Left click to place color.</p>
+        <p> Right click to clear color.</p>
+        <p> You can click and drag to place and clear colors faster.</p>
+      </div>
+      <div
+        className={
+          cells.length === 15 * 15
+            ? "grid"
+            : cells.length === 500
+            ? "portrait"
+            : "landscape"
+        }
+        ref={canvas}
+      >
+        {cells.map((cell, index) => (
+          <div
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            // set default color of cell to white
+            style={{ background: cell.on ? cell.color : "#ffffff" }}
+            className={borders ? "borderedCell" : "cell"}
+            onMouseOver={updateCell(index)}
+            onMouseDown={updateCell(index)}
+            onContextMenu={(e) => e.preventDefault()}
+          />
+        ))}
+      </div>
     </div>
   );
 };
